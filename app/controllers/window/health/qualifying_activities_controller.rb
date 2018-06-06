@@ -7,12 +7,14 @@ module Window::Health
     before_action :set_qualifying_activities, only: :index
 
     def index
-
+      
     end
 
     def set_qualifying_activities
-      @qualifying_activities = @patient.qualifying_activities.order(date_of_activity: :desc)
+      # sort / paginate
+      @qualifying_activities = @patient.qualifying_activities
+        .order(date_of_activity: :desc)
+        .page(params[:page]).per(25)
     end
   end
 end
-
